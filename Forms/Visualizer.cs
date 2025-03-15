@@ -18,12 +18,12 @@ namespace Algorithm_Visualizer
             InitializeComponent();
 
             // Generate random array for visualization
+            Constants.BarWidth = (panelDraw.Width / Constants.InitialArrLen) - Constants.BarMargin;
             UnorderedArray = Utility.RandomGeneration.GenerateRandomArray<int>(
-                panelDraw.Width / (Constants.BarWidth+Constants.BarMargin),
+                Constants.InitialArrLen,
                 () => Utility.RandomGeneration.Random.Next(1, panelDraw.Height)
             );
-
-            panelDraw.Invalidate(); // Force repaint
+            panelDraw.Invalidate();
         }
 
         public int[] UnorderedArray
@@ -33,15 +33,66 @@ namespace Algorithm_Visualizer
         }
 
 
+        private void FocusLost_Changed(object sender, EventArgs e)
+        {
+            SortingAlgorithms.activeIndex = null;
+            var txtBx = (TextBox)sender;
+            if (int.TryParse(txtBx.Text, out int txtBxValue))
+            {
+                Constants.BarWidth = (panelDraw.Width / txtBxValue) - Constants.BarMargin;
+                UnorderedArray = Utility.RandomGeneration.GenerateRandomArray<int>(
+                    txtBxValue,
+                    () => Utility.RandomGeneration.Random.Next(1, panelDraw.Height)
+                );
+            }
+            else 
+            {
+                ResetArray();
+            }
+            panelDraw.Invalidate();
+        }
+
+        private void TxtInput_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Allow only digits and control keys (Backspace, Delete, etc.)
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true; // Block invalid characters
+            }
+        }
+
+        private void TxtInput_TextChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(txtInput.Text, out int value))
+            {
+                if (value < 1)
+                    txtInput.Text = "1";  // Enforce lower limit
+                else if (value > 100)
+                    txtInput.Text = "100"; // Enforce upper limit
+            }
+            else if (txtInput.Text != "")
+            {
+                txtInput.Text = "1"; // Default value if cleared
+            }
+        }
+
+
         private void BtnReset_Click(object sender, EventArgs e)
         {
+            ResetArray();
+        }
+
+        private void ResetArray()
+        {
+            SortingAlgorithms.activeIndex = null;
             UnorderedArray = Utility.RandomGeneration.GenerateRandomArray<int>(
-                panelDraw.Width / (Constants.BarWidth+Constants.BarMargin),
+                panelDraw.Width / (Constants.BarWidth + Constants.BarMargin),
                 () => Utility.RandomGeneration.Random.Next(1, panelDraw.Height)
             );
 
             panelDraw.Invalidate();
         }
+
         private async void BtnStart_Click(object sender, EventArgs e)
         {
             if (sender is Button btn)

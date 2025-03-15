@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics.Eventing.Reader;
+using System.Windows.Forms;
 
 namespace Algorithm_Visualizer
 {
@@ -17,6 +19,40 @@ namespace Algorithm_Visualizer
                 }
                 return arr;
             }
+        }
+
+        public static class UserInterface 
+        {
+            public static void ApplyMargins(Control parent, Padding margin)
+            {
+                foreach (Control control in parent.Controls)
+                {
+                    Padding calculatedMargin = margin;
+
+                    if (control is Label)
+                    {
+                        calculatedMargin.Top = calculatedMargin.Top * 2;
+                    }
+                    else if (control is TextBox)
+                    { }
+                    else if (control is Button)
+                    { }
+                    else if (control is ComboBox)
+                    { }
+                    else if (control is TextBox)
+                    { }
+
+                    control.Margin = calculatedMargin; // Apply margin to current control
+
+
+                    // Recursively apply to children (for nested panels)
+                    if (control.HasChildren)
+                    {
+                        ApplyMargins(control, margin);
+                    }
+                }
+            }
+
         }
     }
 }
