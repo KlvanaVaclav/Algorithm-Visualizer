@@ -8,12 +8,12 @@ using System.Windows.Forms;
 
 namespace Algorithm_Visualizer
 {
-    public partial class Form1 : Form
+    public partial class Visualizer : Form
     {
         private int[] _unorderedArray;
         private CancellationTokenSource _cts;
 
-        public Form1()
+        public Visualizer()
         {
             InitializeComponent();
 

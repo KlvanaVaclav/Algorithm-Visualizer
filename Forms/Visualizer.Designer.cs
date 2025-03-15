@@ -4,7 +4,7 @@ using static Algorithm_Visualizer.Enums;
 
 namespace Algorithm_Visualizer
 {
-    partial class Form1
+    partial class Visualizer
     {
         private System.ComponentModel.IContainer components = null;
 
