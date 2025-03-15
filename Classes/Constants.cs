@@ -18,11 +18,15 @@ namespace Algorithm_Visualizer
         /// <summary>
         /// Bar width in px
         /// </summary>
-        public const int BarWidth = 10;
+        public static int BarWidth { get; set; } = 10;
 
         /// <summary>
         /// Bar margin in px
         /// </summary>
         public const int BarMargin = 5;
+
+
+
+        public const int InitialArrLen = 30;
     }
 }
